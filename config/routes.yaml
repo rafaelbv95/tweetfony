@@ -25,3 +25,8 @@ api_post_user:
   path: /api/users
   controller: App\Controller\ApiController::postTweetfonyUser
   methods: ["POST"]
+
+api_put_user:
+  path: /api/users/{id}
+  controller: App\Controller\ApiController::putTweetfonyUser
+  methods: ["PUT"]
