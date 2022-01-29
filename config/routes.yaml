@@ -5,3 +5,18 @@ index:
 ver_tweet:
     path: /tweet/{id}
     controller: App\Controller\TweetController::verTweet
+
+api_get_tweet:
+  path: /api/tweets/{id}
+  controller: App\Controller\ApiController::getTweet
+  methods: ["GET"]
+
+api_get_user:
+  path: /api/users/{id}
+  controller: App\Controller\ApiController::getTweetfonyUser
+  methods: ["GET"]
+  
+api_index:
+  path: /api
+  controller: App\Controller\ApiController::index
+  methods: ["GET"]
