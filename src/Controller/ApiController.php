@@ -43,7 +43,21 @@ class ApiController extends AbstractController
 
     function getTweetfonyUser($id) {
         // TODO
-        return new JsonResponse();
+         $entityManager = $this->getDoctrine()->getManager();
+         $user = $entityManager->getRepository(User::class)->find($id);
+         
+         if ($user == null) {
+             return new JsonResponse([
+                 'error' => 'User not found'
+             ], 404);
+         }
+         
+         $result = new \stdClass();
+         $result->id = $user->getId();
+         $result->name = $user->getName();
+         $result->user_name = $user->getUserName();
+ 
+         return new JsonResponse($result);
     }
 
     function postTweetfonyUser(Request $request) {
