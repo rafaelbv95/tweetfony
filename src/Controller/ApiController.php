@@ -243,6 +243,38 @@ class ApiController extends AbstractController
         return new JsonResponse($result);
       }
 
+      function putTweet(Request $request, $id)
+    {
+        $entityManager = $this->getDoctrine()->getManager();
+        $tweet = $entityManager->getRepository(Tweet::class)->find($id);
+        if ($tweet == null) {
+            return new JsonResponse([
+                'error' => 'Tweet not found'
+            ], 404);
+        }
+        
+        $tweet->setText($request->request->get("text"));
+        $tweet->setDate(new \DateTime());
+        $entityManager->flush();
+
+      
+        $result = new \stdClass();
+        $result->id = $tweet->getId();
+        $result->date = $tweet->getDate();
+        $result->text = $tweet->getText();
+        $result->user = $this->generateUrl('api_get_user', [
+            'id' => $tweet->getUser()->getId(),
+        ], UrlGeneratorInterface::ABSOLUTE_URL);
+        $result->likes = array();
+        foreach ($tweet->getLikes() as $user) {
+            $result->likes[] = $this->generateUrl('api_get_user', [
+                'id' => $user->getId(),
+            ], UrlGeneratorInterface::ABSOLUTE_URL);
+        }
+        
+        return new JsonResponse($result);
+    }
+
 
 
 }

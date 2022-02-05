@@ -46,3 +46,8 @@ api_put_user:
   path: /api/users/{id}
   controller: App\Controller\ApiController::putTweetfonyUser
   methods: ["PUT"]
+
+api_put_tweet:
+  path: /api/tweets/{id}
+  controller: App\Controller\ApiController::putTweet
+  methods: ["PUT"]
