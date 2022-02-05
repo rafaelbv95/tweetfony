@@ -56,6 +56,21 @@ class ApiController extends AbstractController
          $result->id = $user->getId();
          $result->name = $user->getName();
          $result->user_name = $user->getUserName();
+
+
+        $result->tweets = array();
+        foreach ($user->getTweets() as $tweet) {
+            $result->tweets[] = $this->generateUrl('api_get_tweet', [
+                'id' => $tweet->getId(),
+            ], UrlGeneratorInterface::ABSOLUTE_URL);
+        }
+
+        $result->likes = array();
+        foreach ($user->getLikes() as $tweet) {
+            $result->likes[] = $this->generateUrl('api_get_tweet', [
+                'id' => $tweet->getId(),
+            ], UrlGeneratorInterface::ABSOLUTE_URL);
+        }
  
          return new JsonResponse($result);
     }
