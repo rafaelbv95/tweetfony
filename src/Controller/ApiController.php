@@ -75,6 +75,74 @@ class ApiController extends AbstractController
          return new JsonResponse($result);
     }
 
+    function getTweets()
+    {
+       
+        $entityManager = $this->getDoctrine()->getManager();
+        $tweets = $entityManager->getRepository(Tweet::class)->findAll();
+
+        
+        if ($tweets == null) {
+            return new JsonResponse([
+                'error' => 'Tweets not found'
+            ], 404);
+        }
+
+       
+        $results = new \stdClass();
+        $results->count = count($tweets);
+        $results->results = array();
+
+       
+        foreach ($tweets as $tweet) {
+            $result = new \stdClass();
+            $result->id = $tweet->getId();
+            $result->url = $this->generateUrl('api_get_tweet', [
+                'id' => $result->id,
+            ], UrlGeneratorInterface::ABSOLUTE_URL);
+
+            array_push($results->results, $result);
+        }
+
+        // Devolvemos el resultado en formato JSON
+        return new JsonResponse($results);
+    }
+
+    function getTweetfonyUsers()
+    {
+      
+        $entityManager = $this->getDoctrine()->getManager();
+        $users = $entityManager->getRepository(User::class)->findAll();
+
+      
+        if ($users == null) {
+            return new JsonResponse([
+                'error' => 'Users not found'
+            ], 404);
+        }
+
+     
+        $results = new \stdClass();
+        $results->count = count($users);
+        $results->results = array();
+
+     
+        foreach ($users as $user) {
+            $result = new \stdClass();
+            $result->name = $user->getName();
+            $result->url = $this->generateUrl('api_get_user', [
+                'id' => $user->getId(),
+            ], UrlGeneratorInterface::ABSOLUTE_URL);
+
+            array_push($results->results, $result);
+        }
+
+      
+        return new JsonResponse($results);
+    }
+
+
+
     function postTweetfonyUser(Request $request) {
         $entityManager = $this->getDoctrine()->getManager();
         $user = $entityManager->getRepository(User::class)->findOneBy(['userName' => $request->request->get("userName")]);

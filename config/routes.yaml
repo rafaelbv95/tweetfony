@@ -16,6 +16,17 @@ api_get_user:
   controller: App\Controller\ApiController::getTweetfonyUser
   methods: ["GET"]
 
+api_get_tweets:
+  path: /api/tweets
+  controller: App\Controller\ApiController::getTweets
+  methods: ["GET"]
+
+api_get_users:
+  path: /api/users
+  controller: App\Controller\ApiController::getTweetfonyUsers
+  methods: ["GET"]
+  
+
 api_index:
   path: /api
   controller: App\Controller\ApiController::index
