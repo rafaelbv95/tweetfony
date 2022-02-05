@@ -32,6 +32,11 @@ api_index:
   controller: App\Controller\ApiController::index
   methods: ["GET"]
 
+api_post_tweet:
+  path: /api/tweets
+  controller: App\Controller\ApiController::postTweet
+  methods: ["POST"]
+
 api_post_user:
   path: /api/users
   controller: App\Controller\ApiController::postTweetfonyUser
