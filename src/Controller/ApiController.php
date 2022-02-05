@@ -11,6 +11,15 @@ use App\Entity\User;
 class ApiController extends AbstractController
 {
 
+  function index() {
+    $result = array();
+    $result['users'] = $this->generateUrl('api_get_users',array(),
+                                          UrlGeneratorInterface::ABSOLUTE_URL);
+    $result['tweets'] = $this->generateUrl('api_get_tweets',array(),
+                                          UrlGeneratorInterface::ABSOLUTE_URL);
+    return new JsonResponse($result);
+  }
+
     function getTweet($id) {
         // Obtenemos el tweet
         $entityManager = $this->getDoctrine()->getManager();
@@ -168,7 +177,7 @@ class ApiController extends AbstractController
             'id' => $user->getId(),
         ], UrlGeneratorInterface::ABSOLUTE_URL); 
         $result->likes = array(); 
-        
+
         return new JsonResponse($result, 201);
     }
 
@@ -190,8 +199,9 @@ class ApiController extends AbstractController
         $result->id = $user->getId();
         $result->name = $user->getName();
         $result->userName = $user->getUserName();
-        $result->likes = array(); // Como no tiene likes no hace falta crear enlaces
-        $result->tweets = array(); // Como no tiene tweets no hace falta crear enlaces
+        $result->likes = array(); 
+        $result->tweets = array(); 
+
         return new JsonResponse($result, 201);
       }
       
